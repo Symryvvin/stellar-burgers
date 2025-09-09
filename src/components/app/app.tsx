@@ -11,57 +11,64 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
+import { clearOrder } from '../../services/slices/orderSlice';
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const backgroundLocation = location.state?.background;
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  const handleModalClose = () => navigate(-1);
+
+  const handleOrderModalClose = () => {
+    dispatch(clearOrder());
+    navigate(-1);
+  };
+
   return (
     <>
       <div className={styles.app}>
-        <BrowserRouter>
-          <AppHeader />
+        <AppHeader />
+        <Routes location={backgroundLocation || location}>
+          <Route path='/' element={<ConstructorPage />} />
+          <Route path='/feed' element={<Feed />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/orders' element={<ProfileOrders />} />
+          <Route path='/feed/:number' element={<OrderInfo />} />
+          <Route path='/ingredients/:id' element={<IngredientDetails />} />
+          <Route path='/profile/orders/:number' element={<OrderInfo />} />
+          <Route path='*' element={<NotFound404 />} />
+        </Routes>
+
+        {backgroundLocation && (
           <Routes>
-            <Route path='/' element={<ConstructorPage />} />
-            <Route path='/feed' element={<Feed />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/forgot-password' element={<ForgotPassword />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/profile/orders' element={<ProfileOrders />} />
-            <Route path='*' element={<NotFound404 />} />
             <Route
               path='/feed/:number'
               element={
-                <Modal
-                  title={''}
-                  onClose={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                >
-                  <OrderInfo />{' '}
+                <Modal title='Детали заказа' onClose={handleOrderModalClose}>
+                  <OrderInfo />
                 </Modal>
               }
             />
             <Route
               path='/ingredients/:id'
               element={
-                <Modal
-                  title={''}
-                  onClose={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                >
+                <Modal title={''} onClose={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }
@@ -69,18 +76,13 @@ const App = () => {
             <Route
               path='/profile/orders/:number'
               element={
-                <Modal
-                  title={''}
-                  onClose={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                >
+                <Modal title={''} onClose={handleOrderModalClose}>
                   <OrderInfo />
                 </Modal>
               }
             />
           </Routes>
-        </BrowserRouter>
+        )}
       </div>
     </>
   );
