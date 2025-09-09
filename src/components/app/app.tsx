@@ -17,8 +17,8 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
 const App = () => (
   <div className={styles.app}>
-    <AppHeader />
     <BrowserRouter>
+      <AppHeader />
       <Routes>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
