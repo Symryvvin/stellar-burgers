@@ -18,6 +18,9 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
 import { clearOrder } from '../../services/slices/orderSlice';
+import { ProtectedRoute } from '../protected-route';
+import { deleteCookie, getCookie } from '../../utils/cookie';
+import { getUser, setAuthChecked } from '../../services/slices/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,6 +30,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+
+    const accessToken = getCookie('accessToken');
+    console.log(accessToken);
+    accessToken ? dispatch(getUser()) : dispatch(setAuthChecked(true));
   }, [dispatch]);
 
   const handleModalClose = () => navigate(-1);
@@ -47,7 +54,14 @@ const App = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/reset-password' element={<ResetPassword />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path='/profile/orders' element={<ProfileOrders />} />
           <Route path='/feed/:number' element={<OrderInfo />} />
           <Route path='/ingredients/:id' element={<IngredientDetails />} />
