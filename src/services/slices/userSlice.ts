@@ -67,7 +67,8 @@ export const userSlice = createSlice({
     isAuthCheckedSelector: (state) => state.authChecked,
     isAuthenticatedSelector: (state) => state.user != null,
     userSelector: (state) => state.user,
-    errorSelector: (state) => state.error
+    errorSelector: (state) => state.error,
+    statusSelector: (state) => state.status
   },
   extraReducers: (builder) => {
     builder
@@ -126,6 +127,10 @@ export const userSlice = createSlice({
         state.error =
           action.error.message || 'Ошибка обновления профиля пользователя';
       })
+      .addCase(logout.pending, (state, action) => {
+        state.status = 'loading';
+        state.error = null;
+      })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.error = null;
@@ -145,6 +150,7 @@ export const { setAuthChecked, setFormValue } = userSlice.actions;
 export const {
   errorSelector,
   userSelector,
+  statusSelector,
   isAuthCheckedSelector,
   isAuthenticatedSelector
 } = userSlice.selectors;

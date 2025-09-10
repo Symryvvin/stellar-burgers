@@ -3,15 +3,18 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   errorSelector,
-  userSelector,
   getUser,
-  updateUser
+  statusSelector,
+  updateUser,
+  userSelector
 } from '../../services/slices/userSlice';
+import { Preloader } from '@ui';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const error = useSelector(errorSelector);
+  const status = useSelector(statusSelector);
 
   const [formValue, setFormValue] = useState({
     name: user?.name || '',
@@ -60,6 +63,10 @@ export const Profile: FC = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  if (status === 'loading') {
+    return <Preloader />;
+  }
 
   return (
     <ProfileUI
