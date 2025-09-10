@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice
+} from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
 import { getIngredientsApi } from '@api';
 
@@ -14,6 +18,8 @@ const initialState: IngredientsState = {
   status: 'loading'
 };
 
+export type TIngredientTypes = 'bun' | 'sauce' | 'main';
+
 export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
   async () => await getIngredientsApi()
@@ -25,6 +31,18 @@ export const ingredientsSlice = createSlice({
   reducers: {},
   selectors: {
     ingredientsSelector: (state) => state.ingredients,
+    ingredientByTypeSelector: createSelector(
+      (state: IngredientsState) => state.ingredients,
+      (_: any, type: TIngredientTypes) => type,
+      (ingredients, type) =>
+        ingredients.filter((ingredient) => ingredient.type === type)
+    ),
+    ingredientByIdSelector: createSelector(
+      (state: IngredientsState) => state.ingredients,
+      (_: any, id: string) => id,
+      (ingredients, id) =>
+        ingredients.find((ingredient) => ingredient._id === id)
+    ),
     errorSelector: (state) => state.error,
     statusSelector: (state) => state.status
   },
@@ -45,5 +63,10 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const { errorSelector, ingredientsSelector, statusSelector } =
-  ingredientsSlice.selectors;
+export const {
+  ingredientsSelector,
+  ingredientByTypeSelector,
+  ingredientByIdSelector,
+  errorSelector,
+  statusSelector
+} = ingredientsSlice.selectors;
