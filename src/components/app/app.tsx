@@ -62,10 +62,24 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path='/profile/orders' element={<ProfileOrders />} />
+          <Route
+            path='/profile/orders'
+            element={
+              <ProtectedRoute>
+                <ProfileOrders />
+              </ProtectedRoute>
+            }
+          />
           <Route path='/feed/:number' element={<OrderInfo />} />
           <Route path='/ingredients/:id' element={<IngredientDetails />} />
-          <Route path='/profile/orders/:number' element={<OrderInfo />} />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+          />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
 
@@ -90,9 +104,11 @@ const App = () => {
             <Route
               path='/profile/orders/:number'
               element={
-                <Modal title='Детали заказа' onClose={handleOrderModalClose}>
-                  <OrderInfo />
-                </Modal>
+                <ProtectedRoute>
+                  <Modal title='Детали заказа' onClose={handleOrderModalClose}>
+                    <OrderInfo />
+                  </Modal>
+                </ProtectedRoute>
               }
             />
           </Routes>
