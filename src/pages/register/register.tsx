@@ -15,14 +15,16 @@ export const Register: FC = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await dispatch(
-      register({
-        name: userName,
-        email: email,
-        password: password
-      })
-    ).unwrap();
-    navigate('/profile');
+    try {
+      await dispatch(
+        register({
+          name: userName,
+          email: email,
+          password: password
+        })
+      ).unwrap();
+      navigate('/profile');
+    } catch (e) {}
   };
 
   return (

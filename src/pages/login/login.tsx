@@ -14,13 +14,15 @@ export const Login: FC = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await dispatch(
-      login({
-        email,
-        password
-      })
-    ).unwrap();
-    navigate('/profile');
+    try {
+      await dispatch(
+        login({
+          email,
+          password
+        })
+      ).unwrap();
+      navigate('/profile');
+    } catch (e) {}
   };
 
   return (
