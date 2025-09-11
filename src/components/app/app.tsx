@@ -32,7 +32,6 @@ const App = () => {
     dispatch(getIngredients());
 
     const accessToken = getCookie('accessToken');
-    console.log(accessToken);
     accessToken ? dispatch(getUser()) : dispatch(setAuthChecked(true));
   }, [dispatch]);
 
