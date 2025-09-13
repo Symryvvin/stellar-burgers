@@ -80,8 +80,6 @@ export const userSlice = createSlice({
         state.status = 'success';
         state.error = null;
         state.user = action.payload.user;
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(register.rejected, (state, action) => {
         state.status = 'error';
@@ -95,8 +93,6 @@ export const userSlice = createSlice({
         state.status = 'success';
         state.error = null;
         state.user = action.payload.user;
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'error';
@@ -134,8 +130,6 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.error = null;
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
         state.status = 'success';
       })
       .addCase(logout.rejected, (state, action) => {
