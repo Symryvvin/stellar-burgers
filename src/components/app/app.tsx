@@ -17,7 +17,7 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
-import { clearOrder } from '../../services/slices/orderSlice';
+import { clearOrder, userOrders } from '../../services/slices/orderSlice';
 import { ProtectedRoute } from '../protected-route';
 import { getCookie } from '../../utils/cookie';
 import { getUser, setAuthChecked } from '../../services/slices/userSlice';
@@ -39,6 +39,12 @@ const App = () => {
 
   const handleOrderModalClose = () => {
     dispatch(clearOrder());
+    navigate(-1);
+  };
+
+  const userOrderModalClose = () => {
+    dispatch(clearOrder());
+    dispatch(userOrders());
     navigate(-1);
   };
 
@@ -132,7 +138,7 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <ProtectedRoute>
-                  <Modal title='Детали заказа' onClose={handleOrderModalClose}>
+                  <Modal title='Детали заказа' onClose={userOrderModalClose}>
                     <OrderInfo />
                   </Modal>
                 </ProtectedRoute>

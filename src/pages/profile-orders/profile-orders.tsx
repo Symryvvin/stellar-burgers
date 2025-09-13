@@ -13,7 +13,7 @@ export const ProfileOrders: FC = () => {
 
   useEffect(() => {
     dispatch(userOrders());
-  }, [orders]);
+  }, []);
 
   return <ProfileOrdersUI orders={orders} />;
 };
