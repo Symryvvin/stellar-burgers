@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TConstructorItems } from '@utils-types';
 
-type TConstructorState = {
-  bun: TConstructorIngredient | null;
-  ingredients: TConstructorIngredient[];
-};
-
-const initialState: TConstructorState = {
+const initialState: TConstructorItems = {
   bun: null,
   ingredients: []
 };
@@ -54,7 +49,7 @@ export const constructorSlice = createSlice({
     }
   },
   selectors: {
-    getConstructorItemsSelector: (state: TConstructorState) => state
+    getConstructorItemsSelector: (state: TConstructorItems) => state
   }
 });
 

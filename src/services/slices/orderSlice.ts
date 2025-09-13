@@ -33,8 +33,11 @@ export const getOrderByNumber = createAsyncThunk<
     }
 
     return response.orders[0];
-  } catch (e: any) {
-    return rejectWithValue(e.message || 'Ошибка при получении заказа');
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return rejectWithValue(e.message);
+    }
+    return rejectWithValue('Ошибка при получении заказа');
   }
 });
 

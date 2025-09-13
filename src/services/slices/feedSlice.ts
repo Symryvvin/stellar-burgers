@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TOrder } from '@utils-types';
+import { TFeed } from '@utils-types';
 import { getFeedsApi } from '@api';
-
-type TFeed = {
-  orders: TOrder[];
-  total: number;
-  totalToday: number;
-};
 
 type TFeedState = {
   feed: TFeed | null;
