@@ -33,13 +33,13 @@ export const ingredientsSlice = createSlice({
     ingredientsSelector: (state) => state.ingredients,
     ingredientByTypeSelector: createSelector(
       (state: IngredientsState) => state.ingredients,
-      (_: any, type: TIngredientTypes) => type,
+      (_: IngredientsState, type: TIngredientTypes) => type,
       (ingredients, type) =>
         ingredients.filter((ingredient) => ingredient.type === type)
     ),
     ingredientByIdSelector: createSelector(
       (state: IngredientsState) => state.ingredients,
-      (_: any, id: string) => id,
+      (_: IngredientsState, id: string) => id,
       (ingredients, id) =>
         ingredients.find((ingredient) => ingredient._id === id)
     ),
