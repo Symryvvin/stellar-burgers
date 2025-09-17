@@ -6,13 +6,13 @@ import {
 import { TIngredient } from '@utils-types';
 import { getIngredientsApi } from '@api';
 
-type IngredientsState = {
+export type IngredientsState = {
   ingredients: TIngredient[];
   error: string | null;
   status: 'success' | 'error' | 'loading';
 };
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [],
   error: null,
   status: 'loading'

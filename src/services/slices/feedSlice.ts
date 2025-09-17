@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TFeed } from '@utils-types';
 import { getFeedsApi } from '@api';
 
-type TFeedState = {
+export type TFeedState = {
   feed: TFeed | null;
   error: string | null;
   status: 'success' | 'error' | 'loading';
 };
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   feed: null,
   error: null,
   status: 'loading'
