@@ -31,23 +31,9 @@ describe('Проверка создания заказа', function () {
       'createOrder'
     );
 
-    cy.contains('[data-cy="ingredient-category-title"]', 'Булки')
-      .next('[data-cy="ingredient-category"]')
-      .within(() => {
-        cy.get('[data-cy="burger-constructor-ingredient"]').first().as('bun');
-      });
-
-    cy.contains('[data-cy="ingredient-category-title"]', 'Начинки')
-      .next('[data-cy="ingredient-category"]')
-      .within(() => {
-        cy.get('[data-cy="burger-constructor-ingredient"]').first().as('main');
-      });
-
-    cy.contains('[data-cy="ingredient-category-title"]', 'Соусы')
-      .next('[data-cy="ingredient-category"]')
-      .within(() => {
-        cy.get('[data-cy="burger-constructor-ingredient"]').eq(1).as('sauce');
-      });
+    cy.getFirstIngredientInCategory('Булки', 'bun');
+    cy.getFirstIngredientInCategory('Начинки', 'main');
+    cy.getFirstIngredientInCategory('Соусы', 'sauce');
 
     cy.get('@bun').find('button').click({ force: true });
     cy.get('@main').find('button').click({ force: true });
@@ -62,12 +48,9 @@ describe('Проверка создания заказа', function () {
       cy.get('[data-cy="order-number"]').should('have.text', res.order.number);
     });
 
-    cy.get('[data-cy="modal"]').should('exist');
+    cy.closeModal();
 
-    cy.get('[data-cy="modal-close-button"]').click();
-    cy.get('[data-cy="modal"]').should('not.exist');
-
-    cy.get('[data-cy="burger-constructor"]').within(() => {
+    cy.getBurgerConstructor().within(() => {
       cy.get('[data-cy="burger-constructor-item"]').should(
         'contain.text',
         'Выберите '

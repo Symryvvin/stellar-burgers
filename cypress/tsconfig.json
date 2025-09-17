@@ -2,10 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "types": ["cypress"]
+    "types": ["cypress", "./support/commands"]
   },
   "include": [
     "../node_modules/cypress",
-    "./**/*.ts"
+    "./**/*.ts",
   ]
 }

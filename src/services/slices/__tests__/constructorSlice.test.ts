@@ -27,7 +27,7 @@ describe('constructorSlice reducer', () => {
 
   it('должен удалять ингредиент по id из конструктор', () => {
     const startState = { bun: null, ingredients: [main, sauce] };
-    const state = reducer(startState, removeIngredientFromConstructor('main1'));
+    const state = reducer(startState, removeIngredientFromConstructor(main.id));
 
     expect(state.ingredients).toEqual([sauce]);
   });
@@ -51,5 +51,6 @@ describe('constructorSlice reducer', () => {
     const state = reducer(startState, clearConstructor());
 
     expect(state.ingredients).toEqual([]);
+    expect(state.bun).toBeNull();
   });
 });
