@@ -9,16 +9,15 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { deleteCookie, setCookie } from '../../utils/cookie';
 
-type TUserState = {
+export type TUserState = {
   user: TUser | null;
   authChecked: boolean;
   error: string | null;
   status: 'success' | 'error' | 'loading';
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   authChecked: false,
   error: null,
